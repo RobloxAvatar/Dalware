@@ -1,0 +1,117 @@
+--//Bypassing Anti Cheat
+
+local gmt = getrawmetatable(game)
+setreadonly(gmt, false)
+local oldNamecall = gmt.__namecall
+
+gmt.__namecall = newcclosure(function(self, ...)
+    local Args = {...}
+    local method = getnamecallmethod()
+    if method == "Kick" then
+        return
+    end
+    return oldNamecall(self, ...)
+end)
+setreadonly(gmt, true)
+
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+local Window = Library.CreateLib("Dalware - Slap Battles", "BloodTheme")
+local MainTab = Window:NewTab("Main")
+local MainSection = MainTab:NewSection("Main")
+
+getgenv().antiRagdoll = false
+
+MainSection:NewButton("Gods Hand", "slaps someone without equipping the gods hand", function()
+    for i,v in pairs(game:GetService("Players"):GetChildren()) do
+        local ohInstance1 = game:GetService("Players")[v.Name].Character.Torso
+        game:GetService("ReplicatedStorage").Godshand:FireServer(ohInstance1)
+    end
+end)
+
+MainSection:NewButton("Unlock Bob", "gives you bobs hand", function()
+    game:GetService("ReplicatedStorage").bob:FireServer()
+end)
+
+MainSection:NewToggle("Anti Ragdoll", "enable or disable ragdoll", function(state)
+    if state then
+        getgenv().antiRagdoll = true
+        while true do wait()
+        if getgenv().antiRagdoll ~= true then return end
+            if getgenv().antiRagdoll == true and game:GetService("Players").LocalPlayer.Character:WaitForChild("Ragdolled").Value == true then
+                oldCFrame = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame
+                game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Humanoid").PlatformStand = false
+                game:GetService("Players").LocalPlayer.Character:FindFirstChild("Head").Anchored = true
+                game:GetService("Players").LocalPlayer.Character:FindFirstChild("HumanoidRootPart").Anchored = true
+                game:GetService("Players").LocalPlayer.Character:FindFirstChild("Torso").Anchored = true
+                repeat wait() until game:GetService("Players").LocalPlayer.Character:WaitForChild("Ragdolled").Value == false
+                game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Humanoid").PlatformStand = false
+                game:GetService("Players").LocalPlayer.Character:FindFirstChild("Head").Anchored = false
+                game:GetService("Players").LocalPlayer.Character:FindFirstChild("HumanoidRootPart").Anchored = false
+                game:GetService("Players").LocalPlayer.Character:FindFirstChild("Torso").Anchored = false
+                game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = oldCFrame
+            end
+        end
+    else
+        getgenv().antiRagdoll = false
+    end
+end)
+
+MainSection:NewKeybind("Kill Aura", "Kill aura", Enum.KeyCode.G, function()
+    if game:GetService("Players").LocalPlayer.leaderstats.Glove.Value == "Default" then
+        for i,v in pairs(game:GetService("Players"):GetChildren()) do
+            local ohInstance1 = workspace[v.Name].HumanoidRootPart
+            game:GetService("ReplicatedStorage").b:FireServer(ohInstance1)
+        end
+    else
+        if game:GetService("Players").LocalPlayer.leaderstats.Glove.Value == "Bull" then
+            for i,v in pairs(game:GetService("Players"):GetChildren()) do
+                local ohInstance1 = workspace[v.Name].HumanoidRootPart
+                game:GetService("ReplicatedStorage").BullHit:FireServer(ohInstance1)
+            end
+        else
+            if game:GetService("Players").LocalPlayer.leaderstats.Glove.Value == "Dice" then
+                for i,v in pairs(game:GetService("Players"):GetChildren()) do
+                    local ohInstance1 = workspace[v.Name].HumanoidRootPart
+                    game:GetService("ReplicatedStorage").DiceHit:FireServer(ohInstance1)
+                end
+            else
+                if game:GetService("Players").LocalPlayer.leaderstats.Glove.Value == "spin" then
+                    for i,v in pairs(game:GetService("Players"):GetChildren()) do
+                        local ohInstance1 = workspace[v.Name].HumanoidRootPart
+                        game:GetService("ReplicatedStorage").spinhit:FireServer(ohInstance1)
+                    end
+                else
+                    if game:GetService("Players").LocalPlayer.leaderstats.Glove.Value == "Dream" then
+                        for i,v in pairs(game:GetService("Players"):GetChildren()) do
+                            local ohInstance1 = workspace[v.Name].HumanoidRootPart
+                            game:GetService("ReplicatedStorage").Dreamhit:FireServer(ohInstance1)
+                        end
+                    else
+                        if game:GetService("Players").LocalPlayer.leaderstats.Glove.Value == "Golden" then
+                            for i,v in pairs(game:GetService("Players"):GetChildren()) do
+                                local ohInstance1 = workspace[v.Name].HumanoidRootPart
+                                local ohBoolean2 = true
+                                
+                                game:GetService("ReplicatedStorage").GoldenHit:FireServer(ohInstance1, ohBoolean2)
+                            end
+                        else
+                            if game:GetService("Players").LocalPlayer.leaderstats.Glove.Value == "Reaper" then
+                                for i,v in pairs(game:GetService("Players"):GetChildren()) do
+                                    local ohInstance1 = workspace[v.Name].HumanoidRootPart
+                                    game:GetService("ReplicatedStorage").ReaperHit:FireServer(ohInstance1)
+                                end
+                            else
+                                if game:GetService("Players").LocalPlayer.leaderstats.Glove.Value == "bob" then
+                                    for i,v in pairs(game:GetService("Players"):GetChildren()) do
+                                        local ohInstance1 = workspace[v.Name].HumanoidRootPart
+                                        game:GetService("ReplicatedStorage").bobhit:FireServer(ohInstance1)
+                                    end
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end
+end)
