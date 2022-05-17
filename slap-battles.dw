@@ -14,12 +14,23 @@ gmt.__namecall = newcclosure(function(self, ...)
 end)
 setreadonly(gmt, true)
 
+function getGoldenSound()
+    for i,v in pairs(workspace[game:GetService("Players").LocalPlayer.Name].HumanoidRootPart:GetChildren()) do
+        if v.Name == "Sound" and v.SoundId == "rbxassetid://6193836931" then
+            return v
+        end
+    end
+end
+
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
-local Window = Library.CreateLib("Dalware - Slap Battles", "BloodTheme")
+local Window = Library.CreateLib("Slap Battles", "BloodTheme")
 local MainTab = Window:NewTab("Main")
 local MainSection = MainTab:NewSection("Main")
+local AbilityTab = Window:NewTab("Ability")
+local AbilitySection = AbilityTab:NewSection("Ability")
 
 getgenv().antiRagdoll = false
+getgenv().kills = nil
 
 MainSection:NewButton("Gods Hand", "slaps someone without equipping the gods hand", function()
     for i,v in pairs(game:GetService("Players"):GetChildren()) do
@@ -53,6 +64,35 @@ MainSection:NewToggle("Anti Ragdoll", "enable or disable ragdoll", function(stat
         end
     else
         getgenv().antiRagdoll = false
+    end
+end)
+
+MainSection:NewToggle("KillStreak", "this has to enabled before typing a number of kills", function(state)
+    if state then
+        getgenv().killStreak = true
+        local gmt = getrawmetatable(game)
+        setreadonly(gmt, false)
+        local oldNamecall = gmt.__namecall
+
+        gmt.__namecall = newcclosure(function(Self, ...)
+            local Args = {...}
+            local method = getnamecallmethod()
+            if tostring(Self) == "KSHit" and tostring(method) == "FireServer" and getgenv().killStreak == true then
+                Args[1] = Args[1]
+                Args[2] = getgenv().kills
+                return Self.FireServer(Self, unpack(Args))
+            else
+                if tostring(Self) == "KSHit" and tostring(method) == "FireServer" and getgenv().killStreak == false then
+                    Args[1] = Args[1]
+                    Args[2] = Args[2]
+                    return Self.FireServer(Self, unpack(Args))
+                end
+            end
+            return oldNamecall(Self, ...)
+        end)
+        setreadonly(gmt, true)
+    else
+        getgenv().killStreak = false
     end
 end)
 
@@ -106,6 +146,14 @@ MainSection:NewKeybind("Kill Aura", "Kill aura", Enum.KeyCode.G, function()
                                         local ohInstance1 = workspace[v.Name].HumanoidRootPart
                                         game:GetService("ReplicatedStorage").bobhit:FireServer(ohInstance1)
                                     end
+                                else
+                                    if game:GetService("Players").LocalPlayer.leaderstats.Glove.Value == "Killstreak" then
+                                        for i,v in pairs(game:GetService("Players"):GetChildren()) do
+                                            local ohInstance1 = workspace[v.Name].HumanoidRootPart
+                                            local ohNumber2 = 0
+                                            game:GetService("ReplicatedStorage").KSHit:FireServer(ohInstance1, ohNumber2)
+                                        end
+                                    end
                                 end
                             end
                         end
@@ -113,5 +161,74 @@ MainSection:NewKeybind("Kill Aura", "Kill aura", Enum.KeyCode.G, function()
                 end
             end
         end
+    end
+end)
+
+getgenv().tool = nil
+getgenv().kills = 0
+getgenv().killStreak = false
+
+MainSection:NewTextBox("Get Kills[Killstreak]", "gives kills on killstreak glove", function(kills)
+    if getgenv().killStreak == false then return end
+    if game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Killstreak") then
+        getgenv().tool = game:GetService("Players").LocalPlayer.Backpack.Killstreak
+    else
+        if game:GetService("Players").LocalPlayer.Character:FindFirstChild("Killstreak") then
+            getgenv().tool = game:GetService("Players").LocalPlayer.Character.Killstreak
+        end
+    end
+    for i = 1,kills do
+        getgenv().kills = getgenv().kills + 1
+        local ohNumber1 = getgenv().kills
+        local ohInstance2 = getgenv().tool
+        game:GetService("ReplicatedStorage").KillsUpdated:FireServer(ohNumber1, ohInstance2)
+    end
+    game:GetService("Players").LocalPlayer.PlayerGui.Kills.TextLabel.Text = "Kills: " .. kills
+end)
+
+getgenv().godMode = false
+
+AbilitySection:NewToggle("Godmode[Golden]", "gives you god mode with golden glove", function(state)
+    if state then
+        getgenv().godMode = true
+        local gmt = getrawmetatable(game)
+        setreadonly(gmt, false)
+        local oldNamecall = gmt.__namecall
+
+        gmt.__namecall = newcclosure(function(Self, ...)
+            local Args = {...}
+            local method = getnamecallmethod()
+            if tostring(Self) == "GoldenHit" and tostring(method) == "FireServer" and getgenv().godMode == true then
+                Args[1] = Args[1]
+                Args[2] = true
+                return Self.FireServer(Self, unpack(Args))
+            else
+                if tostring(Self) == "GoldenHit" and tostring(method) == "FireServer" and getgenv().godMode == false then
+                    Args[1] = Args[1]
+                    Args[2] = Args[2]
+                    return Self.FireServer(Self, unpack(Args))
+                end
+            end
+            return oldNamecall(Self, ...)
+        end)
+        setreadonly(gmt, true)
+        while wait() do
+            if getgenv().godMode == true then
+                workspace[game:GetService("Players").LocalPlayer.Name].HumanoidRootPart.ChildAdded:Connect(function(child)
+                    if child.Name == "Sound" and getgenv().godMode == true then
+                        workspace[game:GetService("Players").LocalPlayer.Name].HumanoidRootPart.Sound.Volume = 0
+                        workspace[game:GetService("Players").LocalPlayer.Name].HumanoidRootPart.Sound:Destroy()
+                    end
+                end)
+                local ohBoolean1 = true
+                game:GetService("ReplicatedStorage").Goldify:FireServer(ohBoolean1)
+                wait(5)
+            end
+        end
+    else
+        local ohBoolean1 = false
+        local ohBrickColor2 = BrickColor.new("Really black")
+        game:GetService("ReplicatedStorage").Goldify:FireServer(ohBoolean1, ohBrickColor2)
+        getgenv().godMode = false
     end
 end)
