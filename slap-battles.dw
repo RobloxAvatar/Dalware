@@ -32,13 +32,6 @@ local AbilitySection = AbilityTab:NewSection("Ability")
 getgenv().antiRagdoll = false
 getgenv().kills = nil
 
-MainSection:NewButton("Gods Hand", "slaps someone without equipping the gods hand", function()
-    for i,v in pairs(game:GetService("Players"):GetChildren()) do
-        local ohInstance1 = game:GetService("Players")[v.Name].Character.Torso
-        game:GetService("ReplicatedStorage").Godshand:FireServer(ohInstance1)
-    end
-end)
-
 MainSection:NewButton("Unlock Bob", "gives you bobs hand", function()
     game:GetService("ReplicatedStorage").bob:FireServer()
 end)
@@ -152,6 +145,13 @@ MainSection:NewKeybind("Kill Aura", "Kill aura", Enum.KeyCode.G, function()
                                             local ohInstance1 = workspace[v.Name].HumanoidRootPart
                                             local ohNumber2 = 0
                                             game:GetService("ReplicatedStorage").KSHit:FireServer(ohInstance1, ohNumber2)
+                                        end
+                                    else
+                                        if game:GetService("Players").LocalPlayer.leaderstats.Glove.Value == "God's Hand" then
+                                            for i,v in pairs(game:GetService("Players"):GetChildren()) do
+                                                local ohInstance1 = game:GetService("Players")[v.Name].Character.HumanoidRootPart
+                                                game:GetService("ReplicatedStorage").Godshand:FireServer(ohInstance1)
+                                            end
                                         end
                                     end
                                 end
