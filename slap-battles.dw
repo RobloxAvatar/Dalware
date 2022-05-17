@@ -23,7 +23,7 @@ function getGoldenSound()
 end
 
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
-local Window = Library.CreateLib("Slap Battles", "BloodTheme")
+local Window = Library.CreateLib("Slap Battles", "Midnight")
 local MainTab = Window:NewTab("Main")
 local MainSection = MainTab:NewSection("Main")
 local AbilityTab = Window:NewTab("Ability")
@@ -152,6 +152,13 @@ MainSection:NewKeybind("Kill Aura", "Kill aura", Enum.KeyCode.G, function()
                                                 local ohInstance1 = game:GetService("Players")[v.Name].Character.HumanoidRootPart
                                                 game:GetService("ReplicatedStorage").Godshand:FireServer(ohInstance1)
                                             end
+                                        else
+                                            if game:GetService("Players").LocalPlayer.leaderstats.Glove.Value == "Ghost" then
+                                                for i,v in pairs(game:GetService("Players"):GetChildren()) do
+                                                    local ohInstance1 = game:GetService("Players")[v.Name].Character.HumanoidRootPart
+                                                    game:GetService("ReplicatedStorage").GhostHit:FireServer(ohInstance1)
+                                                end
+                                            end
                                         end
                                     end
                                 end
@@ -177,6 +184,7 @@ MainSection:NewTextBox("Get Kills[Killstreak]", "gives kills on killstreak glove
             getgenv().tool = game:GetService("Players").LocalPlayer.Character.Killstreak
         end
     end
+    getgenv().kills = 0
     for i = 1,kills do
         getgenv().kills = getgenv().kills + 1
         local ohNumber1 = getgenv().kills
@@ -230,5 +238,13 @@ AbilitySection:NewToggle("Godmode[Golden]", "gives you god mode with golden glov
         local ohBrickColor2 = BrickColor.new("Really black")
         game:GetService("ReplicatedStorage").Goldify:FireServer(ohBoolean1, ohBrickColor2)
         getgenv().godMode = false
+    end
+end)
+
+AbilitySection:NewToggle("Invisibility[Ghost]", "enable or disables invisibility on ghost", function(state)
+    if state then
+        game:GetService("ReplicatedStorage").Ghostinvisibilityactivated:FireServer()
+    else
+        game:GetService("ReplicatedStorage").Ghostinvisibilitydeactivated:FireServer()
     end
 end)
