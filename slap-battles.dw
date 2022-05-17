@@ -23,7 +23,7 @@ function getGoldenSound()
 end
 
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
-local Window = Library.CreateLib("Slap Battles", "Midnight")
+local Window = Library.CreateLib("Slap Battles", "BloodTheme")
 local MainTab = Window:NewTab("Main")
 local MainSection = MainTab:NewSection("Main")
 local AbilityTab = Window:NewTab("Ability")
