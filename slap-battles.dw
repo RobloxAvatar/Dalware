@@ -22,74 +22,26 @@ function getGoldenSound()
     end
 end
 
-local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
-local Window = Library.CreateLib("Slap Battles", "BloodTheme")
-local MainTab = Window:NewTab("Main")
-local MainSection = MainTab:NewSection("Main")
-local AbilityTab = Window:NewTab("Ability")
-local AbilitySection = AbilityTab:NewSection("Ability")
+local library = loadstring(game:HttpGet(('https://raw.githubusercontent.com/RobloxAvatar/uiLibary/main/Uilib.lua')))()
 
-getgenv().antiRagdoll = false
-getgenv().kills = nil
+local w = library:CreateWindow("Slap Battles")
+local MainTab = w:CreateFolder("Main")
+local AbilityTab = w:CreateFolder("Ability")
+kills = 0
 
-MainSection:NewButton("Unlock Bob", "gives you bobs hand", function()
+MainTab:Button("Unlock Bob", function()
     game:GetService("ReplicatedStorage").bob:FireServer()
 end)
 
-MainSection:NewToggle("Anti Ragdoll", "enable or disable ragdoll", function(state)
-    if state then
-        getgenv().antiRagdoll = true
-        while true do wait()
-        if getgenv().antiRagdoll ~= true then return end
-            if getgenv().antiRagdoll == true and game:GetService("Players").LocalPlayer.Character:WaitForChild("Ragdolled").Value == true then
-                oldCFrame = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame
-                game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Humanoid").PlatformStand = false
-                game:GetService("Players").LocalPlayer.Character:FindFirstChild("Head").Anchored = true
-                game:GetService("Players").LocalPlayer.Character:FindFirstChild("HumanoidRootPart").Anchored = true
-                game:GetService("Players").LocalPlayer.Character:FindFirstChild("Torso").Anchored = true
-                repeat wait() until game:GetService("Players").LocalPlayer.Character:WaitForChild("Ragdolled").Value == false
-                game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Humanoid").PlatformStand = false
-                game:GetService("Players").LocalPlayer.Character:FindFirstChild("Head").Anchored = false
-                game:GetService("Players").LocalPlayer.Character:FindFirstChild("HumanoidRootPart").Anchored = false
-                game:GetService("Players").LocalPlayer.Character:FindFirstChild("Torso").Anchored = false
-                game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = oldCFrame
-            end
-        end
-    else
-        getgenv().antiRagdoll = false
-    end
+MainTab:Toggle("Anti Ragdoll", function(bool)
+    AntiRagdoll = bool
 end)
 
-MainSection:NewToggle("KillStreak", "this has to enabled before typing a number of kills", function(state)
-    if state then
-        getgenv().killStreak = true
-        local gmt = getrawmetatable(game)
-        setreadonly(gmt, false)
-        local oldNamecall = gmt.__namecall
-
-        gmt.__namecall = newcclosure(function(Self, ...)
-            local Args = {...}
-            local method = getnamecallmethod()
-            if tostring(Self) == "KSHit" and tostring(method) == "FireServer" and getgenv().killStreak == true then
-                Args[1] = Args[1]
-                Args[2] = getgenv().kills
-                return Self.FireServer(Self, unpack(Args))
-            else
-                if tostring(Self) == "KSHit" and tostring(method) == "FireServer" and getgenv().killStreak == false then
-                    Args[1] = Args[1]
-                    Args[2] = Args[2]
-                    return Self.FireServer(Self, unpack(Args))
-                end
-            end
-            return oldNamecall(Self, ...)
-        end)
-        setreadonly(gmt, true)
-    else
-        getgenv().killStreak = false
-    end
+MainTab:Toggle("KillStreak", function(bool)
+    killStreak = bool
 end)
 
-MainSection:NewKeybind("Kill Aura", "Kill aura", Enum.KeyCode.G, function()
+MainTab:Bind("Kill Aura", Enum.KeyCode.G, function()
     if game:GetService("Players").LocalPlayer.leaderstats.Glove.Value == "Default" then
         for i,v in pairs(game:GetService("Players"):GetChildren()) do
             local ohInstance1 = workspace[v.Name].HumanoidRootPart
@@ -171,59 +123,69 @@ MainSection:NewKeybind("Kill Aura", "Kill aura", Enum.KeyCode.G, function()
     end
 end)
 
-getgenv().tool = nil
-getgenv().kills = 0
-getgenv().killStreak = false
-
-MainSection:NewTextBox("Get Kills[Killstreak]", "gives kills on killstreak glove", function(kills)
-    if getgenv().killStreak == false then return end
+MainTab:Box("Get Kills[Killstreak]", "number", function(k)
     if game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Killstreak") then
-        getgenv().tool = game:GetService("Players").LocalPlayer.Backpack.Killstreak
+        tool = game:GetService("Players").LocalPlayer.Backpack.Killstreak
     else
         if game:GetService("Players").LocalPlayer.Character:FindFirstChild("Killstreak") then
-            getgenv().tool = game:GetService("Players").LocalPlayer.Character.Killstreak
+            tool = game:GetService("Players").LocalPlayer.Character.Killstreak
         end
     end
-    getgenv().kills = 0
-    for i = 1,kills do
-        getgenv().kills = getgenv().kills + 1
-        local ohNumber1 = getgenv().kills
-        local ohInstance2 = getgenv().tool
+    kills = 0
+    for i = 1,k do
+        kills = kills + 1
+        local ohNumber1 = kills
+        local ohInstance2 = tool
         game:GetService("ReplicatedStorage").KillsUpdated:FireServer(ohNumber1, ohInstance2)
     end
     game:GetService("Players").LocalPlayer.PlayerGui.Kills.TextLabel.Text = "Kills: " .. kills
 end)
 
-getgenv().godMode = false
+AbilityTab:Toggle("GodMode[Golden]", function(bool)
+    godMode = bool
+    if godMode == false then
+        local ohBoolean1 = false
+        local ohBrickColor2 = BrickColor.new("Really black")
+        game:GetService("ReplicatedStorage").Goldify:FireServer(ohBoolean1, ohBrickColor2)
+    end
+end)
 
-AbilitySection:NewToggle("Godmode[Golden]", "gives you god mode with golden glove", function(state)
-    if state then
-        getgenv().godMode = true
-        local gmt = getrawmetatable(game)
-        setreadonly(gmt, false)
-        local oldNamecall = gmt.__namecall
+AbilityTab:Toggle("Invisibility[Ghost]", function(bool)
+    if bool then
+        game:GetService("ReplicatedStorage").Ghostinvisibilityactivated:FireServer()
+    else
+        game:GetService("ReplicatedStorage").Ghostinvisibilitydeactivated:FireServer()
+    end
+end)
 
-        gmt.__namecall = newcclosure(function(Self, ...)
-            local Args = {...}
-            local method = getnamecallmethod()
-            if tostring(Self) == "GoldenHit" and tostring(method) == "FireServer" and getgenv().godMode == true then
-                Args[1] = Args[1]
-                Args[2] = true
-                return Self.FireServer(Self, unpack(Args))
-            else
-                if tostring(Self) == "GoldenHit" and tostring(method) == "FireServer" and getgenv().godMode == false then
-                    Args[1] = Args[1]
-                    Args[2] = Args[2]
-                    return Self.FireServer(Self, unpack(Args))
-                end
-            end
-            return oldNamecall(Self, ...)
-        end)
-        setreadonly(gmt, true)
-        while wait() do
-            if getgenv().godMode == true then
+local gmt = getrawmetatable(game)
+setreadonly(gmt, false)
+local oldNamecall = gmt.__namecall
+
+gmt.__namecall = newcclosure(function(Self, ...)
+    local Args = {...}
+    local method = getnamecallmethod()
+    if tostring(Self) == "GoldenHit" and tostring(method) == "FireServer" and godMode == true then
+        Args[1] = Args[1]
+        Args[2] = true
+        return Self.FireServer(Self, unpack(Args))
+    else
+        if tostring(Self) == "GoldenHit" and tostring(method) == "FireServer" and godMode == false then
+            Args[1] = Args[1]
+            Args[2] = Args[2]
+            return Self.FireServer(Self, unpack(Args))
+        end
+    end
+    return oldNamecall(Self, ...)
+end)
+setreadonly(gmt, true)
+
+spawn(function()
+    while task.wait() do
+        if godMode then
+            pcall(function()
                 workspace[game:GetService("Players").LocalPlayer.Name].HumanoidRootPart.ChildAdded:Connect(function(child)
-                    if child.Name == "Sound" and getgenv().godMode == true then
+                    if child.Name == "Sound" then
                         workspace[game:GetService("Players").LocalPlayer.Name].HumanoidRootPart.Sound.Volume = 0
                         workspace[game:GetService("Players").LocalPlayer.Name].HumanoidRootPart.Sound:Destroy()
                     end
@@ -231,20 +193,53 @@ AbilitySection:NewToggle("Godmode[Golden]", "gives you god mode with golden glov
                 local ohBoolean1 = true
                 game:GetService("ReplicatedStorage").Goldify:FireServer(ohBoolean1)
                 wait(5)
-            end
+            end)
         end
-    else
-        local ohBoolean1 = false
-        local ohBrickColor2 = BrickColor.new("Really black")
-        game:GetService("ReplicatedStorage").Goldify:FireServer(ohBoolean1, ohBrickColor2)
-        getgenv().godMode = false
     end
 end)
 
-AbilitySection:NewToggle("Invisibility[Ghost]", "enable or disables invisibility on ghost", function(state)
-    if state then
-        game:GetService("ReplicatedStorage").Ghostinvisibilityactivated:FireServer()
-    else
-        game:GetService("ReplicatedStorage").Ghostinvisibilitydeactivated:FireServer()
+spawn(function()
+    while task.wait() do
+        if AntiRagdoll then
+            pcall(function()
+                if game:GetService("Players").LocalPlayer.Character:WaitForChild("Ragdolled").Value == true then
+                    oldCFrame = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame
+                    game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Humanoid").PlatformStand = false
+                    game:GetService("Players").LocalPlayer.Character:FindFirstChild("Head").Anchored = true
+                    game:GetService("Players").LocalPlayer.Character:FindFirstChild("HumanoidRootPart").Anchored = true
+                    game:GetService("Players").LocalPlayer.Character:FindFirstChild("Torso").Anchored = true
+                    repeat wait() until game:GetService("Players").LocalPlayer.Character:WaitForChild("Ragdolled").Value == false
+                    game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Humanoid").PlatformStand = false
+                    game:GetService("Players").LocalPlayer.Character:FindFirstChild("Head").Anchored = false
+                    game:GetService("Players").LocalPlayer.Character:FindFirstChild("HumanoidRootPart").Anchored = false
+                    game:GetService("Players").LocalPlayer.Character:FindFirstChild("Torso").Anchored = false
+                    game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = oldCFrame
+                end
+            end)
+        end
     end
+end)
+
+spawn(function()
+    local gmt = getrawmetatable(game)
+    setreadonly(gmt, false)
+    local oldNamecall = gmt.__namecall
+
+    gmt.__namecall = newcclosure(function(Self, ...)
+        local Args = {...}
+        local method = getnamecallmethod()
+        if tostring(Self) == "KSHit" and tostring(method) == "FireServer" and killStreak == true then
+            Args[1] = Args[1]
+            Args[2] = kills
+            return Self.FireServer(Self, unpack(Args))
+        else
+            if tostring(Self) == "KSHit" and tostring(method) == "FireServer" and killStreak == false then
+                Args[1] = Args[1]
+                Args[2] = Args[2]
+                return Self.FireServer(Self, unpack(Args))
+            end
+        end
+        return oldNamecall(Self, ...)
+    end)
+    setreadonly(gmt, true)
 end)
