@@ -1,5 +1,4 @@
 --©Copyright 2022-5 Dalware
---Fixed
 for i,v in pairs(game:GetService("CoreGui"):GetChildren()) do
 	if v.Name == "Dalware" then
 		return v
@@ -89,7 +88,7 @@ down_triangle.ImageColor3 = Color3.fromRGB(252, 0, 16)
 down_triangle.ImageRectOffset = Vector2.new(764, 244)
 down_triangle.ImageRectSize = Vector2.new(36, 36)
 
-local function QHFTFN_fake_script()
+local function DXTNJ_fake_script() 
 	local script = Instance.new('LocalScript', LoadingBar)
 
 	local bar = script.Parent.Parent.LoadingBar
@@ -104,12 +103,10 @@ local function QHFTFN_fake_script()
 	
 	for i = 1,100 do
 		if i == 25 then
-			typewrite(loadingtext, "Checking dalware status...")
 			local checkstatus = game:HttpGet("https://raw.githubusercontent.com/RobloxAvatar/Dalware/main/status.dw", true)
+			typewrite(loadingtext, "Checking dalware status...")
 			wait(1.75)
-			if string.find(game:HttpGet("https://raw.githubusercontent.com/RobloxAvatar/Dalware/main/people.txt"), "Offline") then
-				typewrite(loadingtext, "Checking dalware status...")
-				wait(1.75)
+			if checkstatus == string.upper("Offline") or string.lower("Offline") then
 				typewrite(loadingtext, "Dalware is offline, closing!")
 				wait(1.75)
 				game:GetService("CoreGui"):FindFirstChild("Dalware"):Destroy()
@@ -152,4 +149,4 @@ local function QHFTFN_fake_script()
 		bar:TweenSize(UDim2.new(formula, 0, 1, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.2, true)
 	end
 end
-coroutine.wrap(QHFTFN_fake_script)()
+coroutine.wrap(DXTNJ_fake_script)()
