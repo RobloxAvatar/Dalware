@@ -1,5 +1,4 @@
 --©Copyright 2022-5 Dalware
-
 for i,v in pairs(game:GetService("CoreGui"):GetChildren()) do
 	if v.Name == "Dalware" then
 		return v
@@ -17,6 +16,7 @@ local down_triangle = Instance.new("ImageButton")
 
 Dalware.Name = "Dalware"
 Dalware.Parent = game:GetService("CoreGui")
+
 LoadingFrame.Name = "LoadingFrame"
 LoadingFrame.Parent = Dalware
 LoadingFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
@@ -88,7 +88,7 @@ down_triangle.ImageColor3 = Color3.fromRGB(252, 0, 16)
 down_triangle.ImageRectOffset = Vector2.new(764, 244)
 down_triangle.ImageRectSize = Vector2.new(36, 36)
 
-local function RMLYG_fake_script()
+local function QKSUR_fake_script()
 	local script = Instance.new('LocalScript', LoadingBar)
 
 	local bar = script.Parent.Parent.LoadingBar
@@ -110,7 +110,17 @@ local function RMLYG_fake_script()
 		end
 		if i == 75 then
 			typewrite(loadingtext, "Checking whitelist...")
-			wait(1.75)
+			local checkwhitelist = game:HttpGet("https://raw.githubusercontent.com/RobloxAvatar/Dalware/main/status.dw", true)
+			if checkwhitelist == string.lower("Online") or string.upper("Online") then
+				wait(1.75)
+			else
+				if checkwhitelist == string.lower("Offline") or string.upper("Offline") then
+					wait(1.75)
+					typewrite(loadingtext, "Dalware is offline, closing!")
+					wait(1.75)
+					game:GetService("CoreGui"):FindFirstChild("Dalware"):Destroy()
+				end
+			end
 		end
 		if string.find(game:HttpGet("https://raw.githubusercontent.com/RobloxAvatar/Dalware/main/people.txt"), game:GetService("Players").LocalPlayer.Name) then
 			if i == 100 then
@@ -119,7 +129,12 @@ local function RMLYG_fake_script()
 				game:GetService("CoreGui"):FindFirstChild("Dalware"):Destroy()
 				if game.PlaceId == 6403373529 then
 					wait(0.5)
-					loadstring(game:HttpGet("https://raw.githubusercontent.com/RobloxAvatar/Dalware/main/slap-battles.dw", true))()					
+					loadstring(game:HttpGet("https://raw.githubusercontent.com/RobloxAvatar/Dalware/main/slap-battles.dw", true))()
+				else
+					if game.PlaceId == 7346416636 then
+						wait(0.5)
+						loadstring(game:HttpGet("https://raw.githubusercontent.com/RobloxAvatar/Dalware/main/pop-it-trading.dw", true))()
+					end				
 				end
 			end
 		else
@@ -136,4 +151,4 @@ local function RMLYG_fake_script()
 		bar:TweenSize(UDim2.new(formula, 0, 1, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.2, true)
 	end
 end
-coroutine.wrap(RMLYG_fake_script)()
+coroutine.wrap(QKSUR_fake_script)()
