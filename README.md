@@ -1,4 +1,5 @@
 --©Copyright 2022-5 Dalware
+--Fixed
 for i,v in pairs(game:GetService("CoreGui"):GetChildren()) do
 	if v.Name == "Dalware" then
 		return v
