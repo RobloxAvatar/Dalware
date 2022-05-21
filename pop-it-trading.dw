@@ -66,8 +66,8 @@ DupeTab:Toggle("Gem green Cash dupe(100 Required)", function(bool)
     gemgreen = bool
 end)
 
-MainTab:Dropdown("Select Item", items, true, function(i)
-    item = i
+MainTab:Box("Item To Buy", "string", function(item)
+   itemtobuy = item
 end)
 
 MainTab:Toggle("Buy Item", function(bool)
@@ -118,60 +118,8 @@ spawn(function()
     while task.wait(0.01) do
         if buyitem then
             pcall(function()
-                if item == "Pop it rainbow" then
-                    local ohString1 = "Pop It Rainbow!"
-                    game:GetService("ReplicatedStorage").RemoteEvents.BuyItemCash:FireServer(ohString1)
-                else
-                    if item == "Ben" then
-                        local ohString1 = "Trading Ben"
-                        game:GetService("ReplicatedStorage").RemoteEvents.BuyItemCash:FireServer(ohString1)
-                    else
-                        if item == "Munneh" then
-                            local ohString1 = "Munneh"
-                            game:GetService("ReplicatedStorage").RemoteEvents.BuyItemCash:FireServer(ohString1)
-                        else
-                            if item == "Mommeh Long Legs" then
-                                local ohString1 = "Mommeh Long Legs"
-                                game:GetService("ReplicatedStorage").RemoteEvents.BuyItemCash:FireServer(ohString1)
-                            else
-                                if item == "The banana" then
-                                    local ohString1 = "The banana"
-                                    game:GetService("ReplicatedStorage").RemoteEvents.BuyItemCash:FireServer(ohString1)
-                                else
-                                    if item == "Sniffers" then
-                                        local ohString1 = "Sniffers"
-                                        game:GetService("ReplicatedStorage").RemoteEvents.BuyItemCash:FireServer(ohString1)
-                                    else
-                                        if item == "Watermelon" then
-                                            local ohString1 = "Watermelon"
-                                            game:GetService("ReplicatedStorage").RemoteEvents.BuyItemCash:FireServer(ohString1)
-                                        else
-                                            if item == "Flower Seed" then
-                                                local ohString1 = "Flower Seed"
-                                                game:GetService("ReplicatedStorage").RemoteEvents.BuyItemCash:FireServer(ohString1)
-                                            else
-                                                if item == "Sports Car" then
-                                                    local ohString1 = "Sports Car"
-                                                    game:GetService("ReplicatedStorage").RemoteEvents.BuyItemCash:FireServer(ohString1)
-                                                else
-                                                    if item == "Tusla rainbow" then
-                                                        local ohString1 = "Tulsa rainbow"
-                                                        game:GetService("ReplicatedStorage").RemoteEvents.BuyItemCash:FireServer(ohString1)
-                                                    else
-                                                        if item == "Gem Rainbow" then
-                                                            local ohString1 = "Gem Rainbow"
-                                                            game:GetService("ReplicatedStorage").RemoteEvents.BuyItemCash:FireServer(ohString1)
-                                                        end
-                                                    end
-                                                end
-                                            end
-                                        end
-                                    end
-                                end
-                            end
-                        end
-                    end
-                end
+                local ohString1 = itemtobuy
+                game:GetService("ReplicatedStorage").RemoteEvents.BuyItemCash:FireServer(ohString1)
             end)
         end
     end
