@@ -115,7 +115,7 @@ MainTab:Button("Scam", function()
 end)
 
 spawn(function()
-    while task.wait(0.05) do
+    while task.wait(0.01) do
         if buyitem then
             pcall(function()
                 if item == "Pop it rainbow" then
