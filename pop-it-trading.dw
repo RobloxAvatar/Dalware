@@ -178,7 +178,7 @@ spawn(function()
 end)
 
 spawn(function()
-    while task.wait(0.5) do
+    while task.wait(0.38) do
         if bananapopit then
             pcall(function()
                 local ohString1 = "The banana"
@@ -191,7 +191,7 @@ spawn(function()
 end)
 
 spawn(function()
-    while task.wait(0.5) do
+    while task.wait(0.38) do
         if rainbowpopit then
             pcall(function()
                 local ohString1 = "Pop It Rainbow!"
@@ -204,7 +204,7 @@ spawn(function()
 end)
 
 spawn(function()
-    while task.wait(0.5) do
+    while task.wait(0.38) do
         if lollyrainbow then
             pcall(function()
                 local ohString1 = "Lolly Rainbow"
@@ -217,7 +217,7 @@ spawn(function()
 end)
 
 spawn(function()
-    while task.wait(0.5) do
+    while task.wait(0.38) do
         if rainbowbanana then
             pcall(function()
                 local ohString1 = "Rainbow Banana"
@@ -230,7 +230,7 @@ spawn(function()
 end)
 
 spawn(function()
-    while task.wait(0.5) do
+    while task.wait(0.38) do
         if etruck then
             pcall(function()
                 local ohString1 = "eTruck"
@@ -243,7 +243,7 @@ spawn(function()
 end)
 
 spawn(function()
-    while task.wait(0.5) do
+    while task.wait(0.38) do
         if tuslarainbow then
             pcall(function()
                 local ohString1 = "Tulsa rainbow"
@@ -256,7 +256,7 @@ spawn(function()
 end)
 
 spawn(function()
-    while task.wait(0.5) do
+    while task.wait(0.38) do
         if bigcat then
             pcall(function()
                 local ohString1 = "Sheriff Cat"
@@ -269,7 +269,7 @@ spawn(function()
 end)
 
 spawn(function()
-    while task.wait(0.5) do
+    while task.wait(0.38) do
         if rainbowcat then
             pcall(function()
                 local ohString1 = "Rainbow Cat"
@@ -282,7 +282,7 @@ spawn(function()
 end)
 
 spawn(function()
-    while task.wait(0.5) do
+    while task.wait(0.38) do
         if gummyorange then
             pcall(function()
                 local ohString1 = "Gummy Orange"
@@ -295,7 +295,7 @@ spawn(function()
 end)
 
 spawn(function()
-    while task.wait(0.5) do
+    while task.wait(0.38) do
         if popitblue then
             pcall(function()
                 local ohString1 = "Pop It Blue!"
@@ -308,7 +308,7 @@ spawn(function()
 end)
 
 spawn(function()
-    while task.wait(0.5) do
+    while task.wait(0.38) do
         if amoguscyan then
             pcall(function()
                 local ohString1 = "Amogus Cyan"
@@ -321,7 +321,7 @@ spawn(function()
 end)
 
 spawn(function()
-    while task.wait(0.5) do
+    while task.wait(0.38) do
         if gemgreen then
             pcall(function()
                 local ohString1 = "Gem Green"
@@ -345,12 +345,12 @@ spawn(function()
 end)
 
 spawn(function()
-    while task.wait(0.05) do
+    while task.wait(0.1) do
         if autdropflowerseed then
             pcall(function()
                 local ohString1 = "Flower Seed"
                 game:GetService("ReplicatedStorage").RemoteEvents.Equip:FireServer(ohString1)
-                wait(0.05)
+                wait(0.11)
                 local ohString2 = "Flower Seed"
                 game:GetService("ReplicatedStorage").RemoteEvents.Drop:FireServer(ohString2)
             end)
@@ -364,7 +364,7 @@ end)
 
 wait(1.75)
 
-local ohString1 = "Dalware Successfully Loaded(Pop it trading)!"
+local ohString1 = "Dalware Successfully Loaded(Pop it trading)"
 local ohTable2 = {
     ["ShowOnClose"] = ""
 }
