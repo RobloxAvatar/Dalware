@@ -4,7 +4,6 @@ for i,v in pairs(game:GetService("CoreGui"):GetChildren()) do
 		return v
 	end
 end
-
 local Dalware = Instance.new("ScreenGui")
 local LoadingFrame = Instance.new("ImageLabel")
 local LoadingFrame_2 = Instance.new("Frame")
@@ -88,7 +87,7 @@ down_triangle.ImageColor3 = Color3.fromRGB(252, 0, 16)
 down_triangle.ImageRectOffset = Vector2.new(764, 244)
 down_triangle.ImageRectSize = Vector2.new(36, 36)
 
-local function DXTNJ_fake_script() 
+local function XULTZH_fake_script()
 	local script = Instance.new('LocalScript', LoadingBar)
 
 	local bar = script.Parent.Parent.LoadingBar
@@ -103,10 +102,9 @@ local function DXTNJ_fake_script()
 	
 	for i = 1,100 do
 		if i == 25 then
-			local checkstatus = game:HttpGet("https://raw.githubusercontent.com/RobloxAvatar/Dalware/main/status.dw", true)
 			typewrite(loadingtext, "Checking dalware status...")
 			wait(1.75)
-			if checkstatus == string.upper("Offline") or string.lower("Offline") then
+			if string.find(game:HttpGet("https://raw.githubusercontent.com/RobloxAvatar/Dalware/main/status.dw"), "Offline") then
 				typewrite(loadingtext, "Dalware is offline, closing!")
 				wait(1.75)
 				game:GetService("CoreGui"):FindFirstChild("Dalware"):Destroy()
@@ -149,4 +147,4 @@ local function DXTNJ_fake_script()
 		bar:TweenSize(UDim2.new(formula, 0, 1, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.2, true)
 	end
 end
-coroutine.wrap(DXTNJ_fake_script)()
+coroutine.wrap(XULTZH_fake_script)()
