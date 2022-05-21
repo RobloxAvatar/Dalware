@@ -15,7 +15,7 @@ function getArea()
 end
 
 local Area = getArea()
-local items = {"Pop it rainbow", "Ben", "Munneh", "Mommeh Long Legs", "The banana", "Sniffers", "Watermelon"}
+local items = {"Pop it rainbow", "Ben", "Munneh", "Mommeh Long Legs", "The banana", "Sniffers", "Watermelon", "Flower Seed", "Sports Car", "Tusla rainbow", "Gem Rainbow"}
 local item
 
 DupeTab:Toggle("Banana Cash dupe(2T Required)", function(bool)
@@ -74,6 +74,10 @@ MainTab:Toggle("Buy Item", function(bool)
     buyitem = bool
 end)
 
+MainTab:Toggle("Auto Drop Flower Seed", function(bool)
+    autdropflowerseed = bool
+end)
+
 MainTab:Toggle("Safe Place", function(bool)
     if bool then
         game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(39.3899612, -11.2439766, -246.390564, 0.104453623, 0.025176391, -0.994211018, -1.02734958e-08, 0.999679506, 0.0253148694, 0.994529784, -0.00264421967, 0.104420148)
@@ -111,7 +115,7 @@ MainTab:Button("Scam", function()
 end)
 
 spawn(function()
-    while task.wait(0.2) do
+    while task.wait(0.05) do
         if buyitem then
             pcall(function()
                 if item == "Pop it rainbow" then
@@ -141,6 +145,26 @@ spawn(function()
                                         if item == "Watermelon" then
                                             local ohString1 = "Watermelon"
                                             game:GetService("ReplicatedStorage").RemoteEvents.BuyItemCash:FireServer(ohString1)
+                                        else
+                                            if item == "Flower Seed" then
+                                                local ohString1 = "Flower Seed"
+                                                game:GetService("ReplicatedStorage").RemoteEvents.BuyItemCash:FireServer(ohString1)
+                                            else
+                                                if item == "Sports Car" then
+                                                    local ohString1 = "Sports Car"
+                                                    game:GetService("ReplicatedStorage").RemoteEvents.BuyItemCash:FireServer(ohString1)
+                                                else
+                                                    if item == "Tusla rainbow" then
+                                                        local ohString1 = "Tulsa rainbow"
+                                                        game:GetService("ReplicatedStorage").RemoteEvents.BuyItemCash:FireServer(ohString1)
+                                                    else
+                                                        if item == "Gem Rainbow" then
+                                                            local ohString1 = "Gem Rainbow"
+                                                            game:GetService("ReplicatedStorage").RemoteEvents.BuyItemCash:FireServer(ohString1)
+                                                        end
+                                                    end
+                                                end
+                                            end
                                         end
                                     end
                                 end
@@ -320,6 +344,28 @@ spawn(function()
     end
 end)
 
+spawn(function()
+    while task.wait(0.05) do
+        if autdropflowerseed then
+            pcall(function()
+                local ohString1 = "Flower Seed"
+                game:GetService("ReplicatedStorage").RemoteEvents.Equip:FireServer(ohString1)
+                wait(0.05)
+                local ohString2 = "Flower Seed"
+                game:GetService("ReplicatedStorage").RemoteEvents.Drop:FireServer(ohString2)
+            end)
+        end
+    end
+end)
+
 game:GetService("RunService").RenderStepped:Connect(function()
     Area = getArea()
 end)
+
+wait(1.75)
+
+local ohString1 = "Dalware Successfully Loaded(Pop it trading)!"
+local ohTable2 = {
+    ["ShowOnClose"] = ""
+}
+game:GetService("ReplicatedStorage").LocalEvents.AlertLocal:Fire(ohString1, ohTable2)
