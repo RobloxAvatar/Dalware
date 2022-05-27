@@ -4,6 +4,7 @@ for i,v in pairs(game:GetService("CoreGui"):GetChildren()) do
 		return v
 	end
 end
+
 local Dalware = Instance.new("ScreenGui")
 local LoadingFrame = Instance.new("ImageLabel")
 local LoadingFrame_2 = Instance.new("Frame")
@@ -87,7 +88,7 @@ down_triangle.ImageColor3 = Color3.fromRGB(252, 0, 16)
 down_triangle.ImageRectOffset = Vector2.new(764, 244)
 down_triangle.ImageRectSize = Vector2.new(36, 36)
 
-local function XULTZH_fake_script()
+local function DDSN_fake_script()
 	local script = Instance.new('LocalScript', LoadingBar)
 
 	local bar = script.Parent.Parent.LoadingBar
@@ -100,6 +101,22 @@ local function XULTZH_fake_script()
 		end
 	end
 	
+	function wrfile()
+		if isfile("Dalware-Version.txt") and string.find(readfile("Dalware-Version.txt"), game:HttpGet("https://raw.githubusercontent.com/RobloxAvatar/Dalware/main/version.dw", true)) then
+			return readfile("Dalware-Version.txt")
+		else
+			if isfile("Dalware-Version.txt") and not string.find(readfile("Dalware-Version.txt"), game:HttpGet("https://raw.githubusercontent.com/RobloxAvatar/Dalware/main/version.dw", true)) then
+				writefile("Dalware-Version.txt", game:HttpGet("https://raw.githubusercontent.com/RobloxAvatar/Dalware/main/version.dw", true))
+				return "oldVersion"
+			else
+				writefile("Dalware-Version.txt", game:HttpGet("https://raw.githubusercontent.com/RobloxAvatar/Dalware/main/version.dw", true))
+				return "createFile"
+			end
+		end
+	end
+	
+	version = wrfile()
+	
 	for i = 1,100 do
 		if i == 25 then
 			typewrite(loadingtext, "Checking dalware status...")
@@ -111,8 +128,23 @@ local function XULTZH_fake_script()
 			end
 		end
 		if i == 50 then
-			typewrite(loadingtext, "Getting everything ready...")
-			wait(1.75)
+			typewrite(loadingtext, "Checking Version...")
+			version = wrfile()
+			if version == "oldVersion" then
+				wait(1.75)
+				typewrite(loadingtext, "The version you are using is outdated, updating!")
+				wait(1.75)
+			else
+				if version == "createFile" then
+					wait(1.75)
+					typewrite(loadingtext, "Downloading Version!")
+					wait(1.75)
+				else
+					wait(1.75)
+					typewrite(loadingtext, "Correct Version!")
+					wait(1.75)
+				end
+			end
 		end
 		if i == 75 then
 			typewrite(loadingtext, "Checking whitelist...")
@@ -130,6 +162,10 @@ local function XULTZH_fake_script()
 					if game.PlaceId == 7346416636 then
 						wait(0.5)
 						loadstring(game:HttpGet("https://raw.githubusercontent.com/RobloxAvatar/Dalware/main/pop-it-trading.dw", true))()
+					else
+						if game.PlaceId == 3527629287 then
+							loadstring(game:HttpGet("https://raw.githubusercontent.com/RobloxAvatar/Dalware/main/big-paintball.dw", true))()
+						end
 					end				
 				end
 			end
@@ -147,4 +183,4 @@ local function XULTZH_fake_script()
 		bar:TweenSize(UDim2.new(formula, 0, 1, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.2, true)
 	end
 end
-coroutine.wrap(XULTZH_fake_script)()
+coroutine.wrap(DDSN_fake_script)()
