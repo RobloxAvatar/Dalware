@@ -1,6 +1,8 @@
 if FLUXUS_LOADED then
     loadstring(game:HttpGet("https://raw.githubusercontent.com/RobloxAvatar/Dalware/main/big-paintball-fluxus.txt"), true))()
-else
+end
+
+if not FLUXUS_LOADED then
     _G.AimbotEnabled = false
     _G.CircleVisible = false
     _G.Esp = false
