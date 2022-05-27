@@ -1,4 +1,5 @@
 --©Copyright 2022-5 Dalware
+--Updated
 for i,v in pairs(game:GetService("CoreGui"):GetChildren()) do
 	if v.Name == "Dalware" then
 		return v
@@ -88,7 +89,7 @@ down_triangle.ImageColor3 = Color3.fromRGB(252, 0, 16)
 down_triangle.ImageRectOffset = Vector2.new(764, 244)
 down_triangle.ImageRectSize = Vector2.new(36, 36)
 
-local function DDSN_fake_script()
+local function NLXJD_fake_script()
 	local script = Instance.new('LocalScript', LoadingBar)
 
 	local bar = script.Parent.Parent.LoadingBar
@@ -129,7 +130,6 @@ local function DDSN_fake_script()
 		end
 		if i == 50 then
 			typewrite(loadingtext, "Checking Version...")
-			version = wrfile()
 			if version == "oldVersion" then
 				wait(1.75)
 				typewrite(loadingtext, "The version you are using is outdated, updating!")
@@ -183,4 +183,4 @@ local function DDSN_fake_script()
 		bar:TweenSize(UDim2.new(formula, 0, 1, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.2, true)
 	end
 end
-coroutine.wrap(DDSN_fake_script)()
+coroutine.wrap(NLXJD_fake_script)()
