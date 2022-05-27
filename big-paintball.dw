@@ -1,5 +1,5 @@
 if FLUXUS_LOADED then
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/RobloxAvatar/Dalware/main/big-paintball-fluxus.txt"), true))()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/RobloxAvatar/Dalware/main/big-paintball-fluxus.dw", true))()
 end
 
 if not FLUXUS_LOADED then
