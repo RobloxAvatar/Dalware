@@ -1,5 +1,4 @@
 --©Copyright 2022-5 Dalware
---Updated
 for i,v in pairs(game:GetService("CoreGui"):GetChildren()) do
 	if v.Name == "Dalware" then
 		return v
@@ -89,7 +88,7 @@ down_triangle.ImageColor3 = Color3.fromRGB(252, 0, 16)
 down_triangle.ImageRectOffset = Vector2.new(764, 244)
 down_triangle.ImageRectSize = Vector2.new(36, 36)
 
-local function NLXJD_fake_script()
+local function DQKFBP_fake_script()
 	local script = Instance.new('LocalScript', LoadingBar)
 
 	local bar = script.Parent.Parent.LoadingBar
@@ -100,6 +99,11 @@ local function NLXJD_fake_script()
 			object.Text = string.sub(text,1,i)
 			wait(0.05)
 		end
+	end
+	
+	function notifiy(txt)
+		local p = loadstring(game:HttpGet("https://raw.githubusercontent.com/RobloxAvatar/Dalware/main/Notify.dw", true))()
+		p:MakeNotification({Name = "Dalware", Content = txt, Time = 15})
 	end
 	
 	function wrfile()
@@ -158,13 +162,17 @@ local function NLXJD_fake_script()
 				if game.PlaceId == 6403373529 then
 					wait(0.5)
 					loadstring(game:HttpGet("https://raw.githubusercontent.com/RobloxAvatar/Dalware/main/slap-battles.dw", true))()
+					notifiy("Game: Slap Battles!")
 				else
 					if game.PlaceId == 7346416636 then
 						wait(0.5)
 						loadstring(game:HttpGet("https://raw.githubusercontent.com/RobloxAvatar/Dalware/main/pop-it-trading.dw", true))()
+						notifiy("Game: Pop It Trading!")
 					else
 						if game.PlaceId == 3527629287 then
 							loadstring(game:HttpGet("https://raw.githubusercontent.com/RobloxAvatar/Dalware/main/big-paintball.dw", true))()
+							wait(0.5)
+							notifiy("Game: Big Paintball!")
 						end
 					end				
 				end
@@ -183,4 +191,4 @@ local function NLXJD_fake_script()
 		bar:TweenSize(UDim2.new(formula, 0, 1, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.2, true)
 	end
 end
-coroutine.wrap(NLXJD_fake_script)()
+coroutine.wrap(DQKFBP_fake_script)()
