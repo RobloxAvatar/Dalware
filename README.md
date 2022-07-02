@@ -33,8 +33,8 @@ LoadingFrame_2.Name = "LoadingFrame"
 LoadingFrame_2.Parent = LoadingFrame
 LoadingFrame_2.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
 LoadingFrame_2.BorderSizePixel = 0
-LoadingFrame_2.Position = UDim2.new(-0.00105848908, 0, 0.537149429, 0)
-LoadingFrame_2.Size = UDim2.new(0, 262, 0, 12)
+LoadingFrame_2.Position = UDim2.new(0, 0, 0.53714937, 0)
+LoadingFrame_2.Size = UDim2.new(0, 261, 0, 12)
 
 LoadingBar.Name = "LoadingBar"
 LoadingBar.Parent = LoadingFrame_2
@@ -88,7 +88,7 @@ down_triangle.ImageColor3 = Color3.fromRGB(252, 0, 16)
 down_triangle.ImageRectOffset = Vector2.new(764, 244)
 down_triangle.ImageRectSize = Vector2.new(36, 36)
 
-local function DQKFBP_fake_script()
+local function VZRENL_fake_script()
 	local script = Instance.new('LocalScript', LoadingBar)
 
 	local bar = script.Parent.Parent.LoadingBar
@@ -173,6 +173,12 @@ local function DQKFBP_fake_script()
 							loadstring(game:HttpGet("https://raw.githubusercontent.com/RobloxAvatar/Dalware/main/big-paintball.dw", true))()
 							wait(0.5)
 							notifiy("Game: Big Paintball!")
+						else
+							if game.PlaceId == 2248408710 then
+								loadstring(game:HttpGet("https://raw.githubusercontent.com/RobloxAvatar/Dalware/main/Destruction-Simulator.dw", true))()
+								wait(0.5)
+								notifiy("Game: Destruction Simulator!")
+							end
 						end
 					end				
 				end
@@ -191,4 +197,4 @@ local function DQKFBP_fake_script()
 		bar:TweenSize(UDim2.new(formula, 0, 1, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.2, true)
 	end
 end
-coroutine.wrap(DQKFBP_fake_script)()
+coroutine.wrap(VZRENL_fake_script)()
