@@ -1,0 +1,120 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+local Window = Library.CreateLib("Destruction Simulator", "BloodTheme")
+local MainTab = Window:NewTab("Main")
+local MainSection = MainTab:NewSection("Main")
+local MiscTab = Window:NewTab("Misc")
+local MiscSection = MiscTab:NewSection("Misc")
+
+MainSection:NewSlider("Select Coins", "select the amount of coins", 99999999, 1, function(coins)
+    _G.Coins = coins
+end)
+
+MainSection:NewButton("Add Coins", "adds coins", function()
+    game:GetService("ReplicatedStorage").Remotes.generateBoost:FireServer("Coins", 999999, tonumber(_G.Coins))
+end)
+
+MainSection:NewSlider("Select Level", "select the amount of coins levels", 55, 1, function(lvl)
+    _G.Level = lvl
+end)
+
+MainSection:NewButton("Add Level", "adds levels", function()
+    local Amount = tonumber(_G.Level)
+    if Amount then
+        local LevelValue = game:GetService("Players").LocalPlayer.leaderstats.Level
+        if Amount > LevelValue.Value then
+            local Difference = Amount - LevelValue.Value
+            repeat
+                local FireAmount = Difference
+                if FireAmount > 15 then
+                    FireAmount = 15
+                end
+                game:GetService("ReplicatedStorage").Remotes.generateBoost:FireServer("Levels", 480, FireAmount)
+                Difference -= FireAmount
+                wait()
+            until Difference == 0
+        elseif Amount < LevelValue.Value then
+            local Difference = Amount - LevelValue.Value
+            repeat
+                local FireAmount = Difference
+                if FireAmount < -15 then
+                    FireAmount = -15
+                end
+                game:GetService("ReplicatedStorage").Remotes.generateBoost:FireServer("Levels", 480, FireAmount)
+                Difference -= FireAmount
+                wait()
+            until Difference == 0
+        end
+    end
+end)
+
+local bombmodule
+
+if game:GetService("Players").LocalPlayer.Character:FindFirstChild("Bomb") then
+    bombmodule = require(game:GetService("Players").LocalPlayer.Character.Bomb.Stats)
+else
+    bombmodule = require(game:GetService("Players").LocalPlayer.Backpack.Bomb.Stats)
+end
+
+MainSection:NewToggle("Infinite Bomb", "you can drop infinite bombs", function(state)
+    if state then
+        if game:GetService("Players").LocalPlayer.Character:FindFirstChild("Bomb") then
+            bombmodule = require(game:GetService("Players").LocalPlayer.Character.Bomb.Stats)
+        else
+            bombmodule = require(game:GetService("Players").LocalPlayer.Backpack.Bomb.Stats)
+        end
+        _G.oldCooldown = bombmodule.Cooldown
+        _G.oldBlasRadius = bombmodule.BlasRadius
+        _G.oldBlastForce = bombmodule.BlastForce
+        wait(0.5)
+        bombmodule.Cooldown = 0
+        bombmodule.BlasRadius = 9000
+        bombmodule.BlastForce = 9000
+    else
+        if game:GetService("Players").LocalPlayer.Character:FindFirstChild("Bomb") then
+            bombmodule = require(game:GetService("Players").LocalPlayer.Character.Bomb.Stats)
+        else
+            bombmodule = require(game:GetService("Players").LocalPlayer.Backpack.Bomb.Stats)
+        end
+        bombmodule.Cooldown = _G.oldCooldown
+        bombmodule.BlasRadius = _G.oldBlasRadius
+        bombmodule.BlastForce = _G.oldBlastForce 
+    end
+end)
+
+local launchermodule
+
+if game:GetService("Players").LocalPlayer.Character:FindFirstChild("Launcher") then
+    launchermodule = require(game:GetService("Players").LocalPlayer.Character.Launcher.Stats)
+else
+    launchermodule = require(game:GetService("Players").LocalPlayer.Backpack.Launcher.Stats)
+end
+
+MainSection:NewToggle("Infinite Rocket Ammo", "you can launch infinite rockets", function(state)
+    if state then
+        if game:GetService("Players").LocalPlayer.Character:FindFirstChild("Launcher") then
+            launchermodule = require(game:GetService("Players").LocalPlayer.Character.Launcher.Stats)
+        else
+            launchermodule = require(game:GetService("Players").LocalPlayer.Backpack.Launcher.Stats)
+        end
+        _G.oldCooldown2 = launchermodule.Cooldown
+        _G.oldRocketSpeed = launchermodule.RocketSpeed
+        _G.oldBursts = launchermodule.Bursts
+        wait(0.5)
+        launchermodule.Cooldown = 0
+        launchermodule.RocketSpeed = 100
+        launchermodule.Bursts = 2
+    else
+        if game:GetService("Players").LocalPlayer.Character:FindFirstChild("Launcher") then
+            launchermodule = require(game:GetService("Players").LocalPlayer.Character.Launcher.Stats)
+        else
+            launchermodule = require(game:GetService("Players").LocalPlayer.Backpack.Launcher.Stats)
+        end
+        launchermodule.Cooldown = _G.oldCooldown2
+        launchermodule.RocketSpeed = _G.oldRocketSpeed
+        launchermodule.Bursts = _G.oldBursts
+    end
+end)
+
+MiscSection:NewButton("Rejoin", "rejoins the current game", function()
+    game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, game.JobId, game:GetService("Players").LocalPlayer)
+end)
