@@ -37,8 +37,8 @@ MainTab:Toggle("Anti Ragdoll", function(bool)
     AntiRagdoll = bool
 end)
 
-MainTab:Toggle("KillStreak", function(bool)
-    killStreak = bool
+MainTab:Toggle("Auto Collect Gapple", function(bool)
+    autogapple = bool
 end)
 
 MainTab:Bind("Kill Aura", Enum.KeyCode.G, function()
@@ -110,6 +110,20 @@ MainTab:Bind("Kill Aura", Enum.KeyCode.G, function()
                                                     local ohInstance1 = game:GetService("Players")[v.Name].Character.HumanoidRootPart
                                                     game:GetService("ReplicatedStorage").GhostHit:FireServer(ohInstance1)
                                                 end
+                                            else
+                                                if game:GetService("Players").LocalPlayer.leaderstats.Glove.Value == "Shukuchi" then
+                                                    for i,v in pairs(game:GetService("Players"):GetChildren()) do
+                                                        local ohInstance1 = game:GetService("Players")[v.Name].Character.HumanoidRootPart
+                                                        game:GetService("ReplicatedStorage").ShukuchiHit:FireServer(ohInstance1)
+                                                    end
+                                                else
+                                                    if game:GetService("Players").LocalPlayer.leaderstats.Glove.Value == "Ice" then
+                                                        for i,v in pairs(game:GetService("Players"):GetChildren()) do
+                                                            local ohInstance1 = game:GetService("Players")[v.Name].Character.HumanoidRootPart
+                                                            game:GetService("ReplicatedStorage").IceHit:FireServer(ohInstance1)
+                                                        end
+                                                    end
+                                                end
                                             end
                                         end
                                     end
@@ -121,24 +135,6 @@ MainTab:Bind("Kill Aura", Enum.KeyCode.G, function()
             end
         end
     end
-end)
-
-MainTab:Box("Get Kills[Killstreak]", "number", function(k)
-    if game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Killstreak") then
-        tool = game:GetService("Players").LocalPlayer.Backpack.Killstreak
-    else
-        if game:GetService("Players").LocalPlayer.Character:FindFirstChild("Killstreak") then
-            tool = game:GetService("Players").LocalPlayer.Character.Killstreak
-        end
-    end
-    kills = 0
-    for i = 1,k do
-        kills = kills + 1
-        local ohNumber1 = kills
-        local ohInstance2 = tool
-        game:GetService("ReplicatedStorage").KillsUpdated:FireServer(ohNumber1, ohInstance2)
-    end
-    game:GetService("Players").LocalPlayer.PlayerGui.Kills.TextLabel.Text = "Kills: " .. kills
 end)
 
 AbilityTab:Toggle("GodMode[Golden]", function(bool)
@@ -182,6 +178,23 @@ setreadonly(gmt, true)
 
 spawn(function()
     while task.wait() do
+        if autogapple then
+            pcall(function()
+                for _,v in pairs(workspace.Arena:GetDescendants()) do
+                    if string.find(v.Name, "Slapple") and v:FindFirstChild("Glove") and v.Glove:FindFirstChildOfClass("TouchTransmitter") then
+                        firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Glove, 0)
+                        firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Glove, 1)
+                        
+                        wait(0.05)
+                    end
+                end
+            end)
+        end
+    end
+end)
+
+spawn(function()
+    while task.wait() do
         if godMode then
             pcall(function()
                 workspace[game:GetService("Players").LocalPlayer.Name].HumanoidRootPart.ChildAdded:Connect(function(child)
@@ -218,28 +231,4 @@ spawn(function()
             end)
         end
     end
-end)
-
-spawn(function()
-    local gmt = getrawmetatable(game)
-    setreadonly(gmt, false)
-    local oldNamecall = gmt.__namecall
-
-    gmt.__namecall = newcclosure(function(Self, ...)
-        local Args = {...}
-        local method = getnamecallmethod()
-        if tostring(Self) == "KSHit" and tostring(method) == "FireServer" and killStreak == true then
-            Args[1] = Args[1]
-            Args[2] = kills
-            return Self.FireServer(Self, unpack(Args))
-        else
-            if tostring(Self) == "KSHit" and tostring(method) == "FireServer" and killStreak == false then
-                Args[1] = Args[1]
-                Args[2] = Args[2]
-                return Self.FireServer(Self, unpack(Args))
-            end
-        end
-        return oldNamecall(Self, ...)
-    end)
-    setreadonly(gmt, true)
 end)
